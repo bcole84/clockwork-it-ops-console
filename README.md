@@ -8,6 +8,16 @@ in the posting rather than just talk about them.
 
 **Live demo:** https://d198vhce9vcowy.cloudfront.net
 
+## Links (for resume / LinkedIn / cover letter)
+
+- **Live demo:** https://d198vhce9vcowy.cloudfront.net
+- **Source code:** https://github.com/bcole84/clockwork-it-ops-console
+
+> Note: the live demo is deployed on-demand (see `scripts/deploy.sh` /
+> `scripts/destroy.sh` below) to avoid leaving AWS resources running
+> indefinitely. If a link ever comes back unreachable, it just means the
+> stack is torn down — redeploying takes a couple of minutes.
+
 ## What it does
 
 Four tabs covering three of the role's core duties plus documentation:
