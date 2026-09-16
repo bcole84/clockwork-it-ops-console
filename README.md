@@ -1,5 +1,7 @@
 # IT Ops Console
 
+![IT Ops Console — Assets tab](docs/screenshots/assets-tab.png)
+
 A small internal-tool build I made while prepping for Clockwork's **IT Operations
 Specialist** posting (Minneapolis, macOS-based shop, Mosyle MDM, Atlassian
 suite, Slack/Teams, 1Password). It's a personal practice/portfolio project,
