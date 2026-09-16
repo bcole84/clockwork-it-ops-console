@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IT Ops Console</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark">⌘</span>
+    <div>
+      <h1>IT Ops Console</h1>
+      <p>Asset tracking · Onboarding &amp; offboarding · Helpdesk tickets · Knowledge base</p>
+    </div>
+  </div>
+  <div id="connection-status" class="status-pill status-unknown">checking API…</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="assets">Assets</button>
+  <button class="tab-btn" data-tab="onboarding">Onboarding &amp; Offboarding</button>
+  <button class="tab-btn" data-tab="tickets">Tickets</button>
+  <button class="tab-btn" data-tab="docs">Knowledge Base</button>
+</nav>
+
+<main>
+
+  <!-- ASSETS -->
+  <section id="tab-assets" class="tab-panel active">
+    <div class="panel-header">
+      <h2>IT Assets</h2>
+      <button class="btn-primary" id="assets-new-btn">+ New Asset</button>
+    </div>
+    <div id="assets-form-wrap" class="form-card hidden">
+      <form id="assets-form">
+        <input type="hidden" name="id" />
+        <div class="form-grid">
+          <label>Type<input name="assetType" placeholder="MacBook Air 15&quot; M3" required /></label>
+          <label>Serial Number<input name="serialNumber" placeholder="C02XXXXXXX" required /></label>
+          <label>Assigned To<input name="assignedTo" placeholder="Employee name (optional)" /></label>
+          <label>Status
+            <select name="status">
+              <option>In Stock</option>
+              <option>In Use</option>
+              <option>In Repair</option>
+              <option>Retired</option>
+            </select>
+          </label>
+          <label>Purchase Date<input type="date" name="purchaseDate" /></label>
+          <label class="full">Notes<textarea name="notes" rows="2" placeholder="AppleCare expiry, condition, etc."></textarea></label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save Asset</button>
+          <button type="button" class="btn-secondary" id="assets-cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Serial</th><th>Assigned To</th><th>Status</th><th>Purchased</th><th>Notes</th><th></th></tr></thead>
+        <tbody id="assets-tbody"></tbody>
+      </table>
+      <p id="assets-empty" class="empty-state hidden">No assets yet — add one above.</p>
+    </div>
+  </section>
+
+  <!-- ONBOARDING -->
+  <section id="tab-onboarding" class="tab-panel">
+    <div class="panel-header">
+      <h2>Onboarding &amp; Offboarding</h2>
+      <div class="btn-group">
+        <button class="btn-primary" id="onboarding-new-btn" data-type="Onboarding">+ New Hire</button>
+        <button class="btn-secondary" id="offboarding-new-btn" data-type="Offboarding">+ Departure</button>
+      </div>
+    </div>
+    <div id="onboarding-form-wrap" class="form-card hidden">
+      <form id="onboarding-form">
+        <input type="hidden" name="id" />
+        <input type="hidden" name="type" />
+        <div class="form-grid">
+          <label>Employee Name<input name="employeeName" required /></label>
+          <label id="onboarding-date-label">Start Date<input type="date" name="targetDate" /></label>
+          <label class="full">Notes<textarea name="notes" rows="2"></textarea></label>
+        </div>
+        <div id="onboarding-steps-wrap"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save Checklist</button>
+          <button type="button" class="btn-secondary" id="onboarding-cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div id="onboarding-list" class="card-list"></div>
+    <p id="onboarding-empty" class="empty-state hidden">No onboarding/offboarding records yet.</p>
+  </section>
+
+  <!-- TICKETS -->
+  <section id="tab-tickets" class="tab-panel">
+    <div class="panel-header">
+      <h2>Helpdesk Tickets</h2>
+      <button class="btn-primary" id="tickets-new-btn">+ New Ticket</button>
+    </div>
+    <div id="tickets-form-wrap" class="form-card hidden">
+      <form id="tickets-form">
+        <input type="hidden" name="id" />
+        <div class="form-grid">
+          <label class="full">Subject<input name="subject" required /></label>
+          <label class="full">Description<textarea name="description" rows="2"></textarea></label>
+          <label>Requester<input name="requester" placeholder="Employee name" /></label>
+          <label>Priority
+            <select name="priority">
+              <option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option>
+            </select>
+          </label>
+          <label>Category
+            <select name="category">
+              <option>Account/Access</option><option>Hardware</option><option>Network</option><option>Software</option><option>Other</option>
+            </select>
+          </label>
+          <label>Status
+            <select name="status">
+              <option>New</option><option>In Progress</option><option>Waiting</option><option>Resolved</option>
+            </select>
+          </label>
+          <label class="full">Notes<textarea name="notes" rows="2" placeholder="Resolution summary, vendor case #, etc."></textarea></label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save Ticket</button>
+          <button type="button" class="btn-secondary" id="tickets-cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Subject</th><th>Requester</th><th>Priority</th><th>Category</th><th>Status</th><th></th></tr></thead>
+        <tbody id="tickets-tbody"></tbody>
+      </table>
+      <p id="tickets-empty" class="empty-state hidden">No tickets yet.</p>
+    </div>
+  </section>
+
+  <!-- KNOWLEDGE BASE -->
+  <section id="tab-docs" class="tab-panel">
+    <div class="panel-header"><h2>Knowledge Base</h2></div>
+    <div class="docs-layout">
+      <ul id="docs-list" class="docs-list"></ul>
+      <article id="docs-content" class="docs-content">
+        <p class="empty-state">Select a playbook on the left.</p>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
